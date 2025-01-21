@@ -18,6 +18,10 @@
                     <ViewCell>
                         <StackLayout Padding="10">
                             <Label Text="{Binding FormattedMovie}" FontSize="16" TextColor="Black"/>
+                            <Label Text="Género:" FontAttributes="Bold" FontSize="14"/>
+                            <Label Text="{Binding Genre}" FontSize="14" TextColor="Blue"/>
+                            <Label Text="Actores:" FontAttributes="Bold" FontSize="14"/>
+                            <Label Text="{Binding Actors}" FontSize="14" TextColor="Green"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
@@ -27,3 +31,4 @@
         <Button x:Name="spanchi_btnBack" Text="Volver" Command="{Binding GoBackCommand}" />
     </StackLayout>
 </ContentPage>
+
