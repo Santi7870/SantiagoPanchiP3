@@ -3,28 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SantiagoPanchiP3.ViewModels"
              x:Class="SantiagoPanchiP3.Views.MovieListPage"
-             Title="Santiago Panchi">
+             Title="Santiago Panchi"
+             BackgroundColor="#F0F0F0">
 
     <ContentPage.BindingContext>
         <vm:MovieListViewModel/>
     </ContentPage.BindingContext>
 
-    <ListView ItemsSource="{Binding Movies}">
+    <ListView ItemsSource="{Binding Movies}" 
+              SeparatorVisibility="Default"
+              BackgroundColor="#FFFFFF"
+              Margin="10">
+
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <StackLayout Orientation="Vertical" Padding="10">
-                        <Label Text="{Binding Title}" FontSize="16" TextColor="Black" />
-                        <Label Text="Género:" FontAttributes="Bold" FontSize="14"/>
-                        <Label Text="{Binding Genre}" FontSize="14" TextColor="Blue"/>
-                        <Label Text="Actores:" FontAttributes="Bold" FontSize="14"/>
-                        <Label Text="{Binding Actor}" FontSize="14" TextColor="Green"/>
-                        <Label Text="Awards:" FontAttributes="Bold" FontSize="14"/>
-                        <Label Text="{Binding Awards}" FontSize="14" TextColor="Red"/>
-                        <Label Text="Website:" FontAttributes="Bold" FontSize="14"/>
-                        <Label Text="{Binding Website}" FontSize="14" TextColor="Purple"/>
-                        <Label Text="Spanchi:" FontAttributes="Bold" FontSize="14"/>
-                        <Label Text="{Binding Spanchi}" FontSize="14" TextColor="Orange"/>
+                    <StackLayout Padding="15" Margin="10" BackgroundColor="#FFFFFF">
+
+                        <Label Text="{Binding Title}" FontSize="22" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center" x:Name="spanchi_label1"/>
+
+                        <StackLayout Padding="10">
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <Label Text="Género:" FontAttributes="Bold" FontSize="14" TextColor="#555555" x:Name="spanchi_label2"/>
+                                <Label Text="{Binding Genre}" FontSize="14" TextColor="#1E90FF" x:Name="spanchi_label3"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <Label Text="Actores:" FontAttributes="Bold" FontSize="14" TextColor="#555555" x:Name="spanchi_label4"/>
+                                <Label Text="{Binding Actor}" FontSize="14" TextColor="#228B22" x:Name="spanchi_label5"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <Label Text="Premios:" FontAttributes="Bold" FontSize="14" TextColor="#555555" x:Name="spanchi_label6"/>
+                                <Label Text="{Binding Awards}" FontSize="14" TextColor="#FF4500" x:Name="spanchi_label7"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <Label Text="Website:" FontAttributes="Bold" FontSize="14" TextColor="#555555" x:Name="spanchi_label8"/>
+                                <Label Text="{Binding Website}" FontSize="14" TextColor="#8A2BE2" x:Name="spanchi_label9"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <Label Text="Spanchi:" FontAttributes="Bold" FontSize="14" TextColor="#555555" x:Name="spanchi_label10"/>
+                                <Label Text="{Binding Spanchi}" FontSize="14" TextColor="#FF8C00" x:Name="spanchi_label11"/>
+                            </StackLayout>
+                        </StackLayout>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
@@ -32,4 +55,6 @@
     </ListView>
 
 </ContentPage>
+
+
 

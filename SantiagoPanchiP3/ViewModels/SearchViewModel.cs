@@ -43,7 +43,7 @@ namespace SantiagoPanchiP3.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SearchText))
             {
-                Message = "Ingrese un título de película.";
+                Message = "Ingresar un título de película.";
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace SantiagoPanchiP3.ViewModels
             if (movie != null)
             {
                 await _databaseService.SaveMovieAsync(movie);
-                Message = "Película guardada en la base de datos.";
+                Message = "Película Exitosamente.";
             }
             else
             {
