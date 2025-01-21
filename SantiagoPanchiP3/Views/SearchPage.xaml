@@ -2,14 +2,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SantiagoPanchiP3.ViewModels"
              x:Class="SantiagoPanchiP3.Views.SearchPage">
-   <ContentPage.BindingContext>
-    <vm:SearchViewModel />
-</ContentPage.BindingContext>
+    <ContentPage.BindingContext>
+        <vm:SearchViewModel />
+    </ContentPage.BindingContext>
 
-<StackLayout>
-    <Entry x:Name="spanchi_entrySearch" Placeholder="Buscar película..." />
-    <Button x:Name="spanchi_btnSearch" Text="Buscar" Command="{Binding SearchCommand}" />
-        <Button x:Name="spanchi_btnClear" Text="Limpiar" Command="{Binding ClearCommand}" />
-        <Label x:Name="spanchi_lblResult" Text="" />
-</StackLayout>
+    <StackLayout Padding="20">
+        <Entry x:Name="spanchi_entrySearch" 
+               Placeholder="Buscar película..." 
+               Text="{Binding SearchText, Mode=TwoWay}" />
+
+        <Button x:Name="spanchi_btnSearch" 
+                Text="Buscar" 
+                Command="{Binding SearchCommand}" />
+
+        <Button x:Name="spanchi_btnClear" 
+                Text="Limpiar" 
+                Command="{Binding ClearCommand}" />
+
+        <CollectionView ItemsSource="{Binding Movies}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" />
+                        <Label Text="{Binding Year}" FontSize="14" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
 </ContentPage>
+
