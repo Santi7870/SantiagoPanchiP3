@@ -7,8 +7,13 @@ public partial class SearchPage : ContentPage
 	public SearchPage()
 	{
 		InitializeComponent();
-        BindingContext = new SearchViewModel();
 
+    }
+
+	  public SearchPage(SearchViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
     }
 
 }

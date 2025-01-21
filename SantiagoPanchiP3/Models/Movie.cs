@@ -7,8 +7,9 @@ namespace SantiagoPanchiP3.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Title { get; set; }
-        public List<string> Genre { get; set; }
-        public List<string> Actors { get; set; }
+
+        public string Genre { get; set; }
+        public string Actor { get; set; }
 
 
         public string Awards { get; set; }
@@ -16,9 +17,6 @@ namespace SantiagoPanchiP3.Models
         public string Spanchi { get; set; }
 
 
-        // Campos adicionales para almacenar solo el primer elemento
-        public string FirstGenre { get; set; }
-        public string FirstActor { get; set; }
 
 
     }

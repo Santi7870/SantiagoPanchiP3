@@ -4,13 +4,14 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:SantiagoPanchiP3.Views"
-    Shell.FlyoutBehavior="Flyout"
     Title="SantiagoPanchiP3">
-
-    <ShellContent
-        Title="Buscar Películas"
-        ContentTemplate="{DataTemplate views:SearchPage}"
-        Route="SearchPage" />
-
+    <TabBar>
+        <Tab Title="Buscar">
+            <ShellContent ContentTemplate="{DataTemplate views:SearchPage}" />
+        </Tab>
+        <Tab Title="Películas">
+            <ShellContent ContentTemplate="{DataTemplate views:MovieListPage}" />
+        </Tab>
+    </TabBar>
 </Shell>
 

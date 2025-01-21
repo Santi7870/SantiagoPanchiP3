@@ -8,109 +8,62 @@ using SantiagoPanchiP3.Data;
 using System.IO;
 using System;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using Microsoft.Maui.Controls;
 
 namespace SantiagoPanchiP3.ViewModels
 {
-    public class SearchViewModel : INotifyPropertyChanged
+    [ObservableObject]
+    public partial class SearchViewModel
     {
-        private readonly HttpClient _httpClient = new HttpClient();
-        private readonly MovieDatabase _movieDatabase;
+        private readonly MovieService _movieService;
+        private readonly DatabaseService _databaseService;
 
-        public ObservableCollection<Movie> Movies { get; set; } = new ObservableCollection<Movie>();
+        //  Constructor sin parámetros requerido por XAML
+        public SearchViewModel() { }
 
-        private string _searchText;
-        public string SearchText
+        // Constructor con dependencias (usado en inyección de dependencias)
+        public SearchViewModel(MovieService movieService, DatabaseService databaseService)
         {
-            get => _searchText;
-            set
-            {
-                _searchText = value;
-                OnPropertyChanged();
-            }
+            _movieService = movieService ?? throw new ArgumentNullException(nameof(movieService));
+            _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
         }
 
-        public ICommand SearchCommand { get; }
-        public ICommand ClearCommand { get; }
-        public ICommand NavigateToMovieListCommand { get; }
+        [ObservableProperty]
+        private string searchText;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        [ObservableProperty]
+        private string message;
 
-        public SearchViewModel()
-        {
-            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "spanchi_movies.db");
-            _movieDatabase = new MovieDatabase(dbPath);
-
-            SearchCommand = new Command(async () => await SearchMovieAsync());
-            ClearCommand = new Command(ClearSearch);
-            NavigateToMovieListCommand = new Command(async () => await Application.Current.MainPage.Navigation.PushAsync(new Views.MovieListPage()));
-
-            LoadMoviesFromDatabase();
-        }
-
-        private async Task SearchMovieAsync()
+        [RelayCommand]
+        private async Task SearchMovie()
         {
             if (string.IsNullOrWhiteSpace(SearchText))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Por favor ingresa un nombre de película", "OK");
+                Message = "Ingrese un título de película.";
                 return;
             }
 
-            string url = $"https://freetestapi.com/api/v1/movies?search={SearchText}&limit=1";
-
-            try
+            var movie = await _movieService.SearchMovieAsync(SearchText);
+            if (movie != null)
             {
-                var response = await _httpClient.GetStringAsync(url);
-                var movies = JsonSerializer.Deserialize<List<Movie>>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                if (movies != null && movies.Any())
-                {
-                    var movie = movies.First();
-
-                    // Extraer solo el primer género y actor
-                    movie.FirstGenre = movie.Genre?.FirstOrDefault() ?? "N/A";
-                    movie.FirstActor = movie.Actors?.FirstOrDefault() ?? "N/A";
-
-                    // Guardar en la base de datos SQLite
-                    await _movieDatabase.SaveMovieAsync(movie);
-
-                    // Recargar la lista después de guardar
-                    LoadMoviesFromDatabase();
-
-                    await Application.Current.MainPage.DisplayAlert("Éxito", "Película guardada correctamente", "OK");
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "No se encontró la película", "OK");
-                }
+                await _databaseService.SaveMovieAsync(movie);
+                Message = "Película guardada en la base de datos.";
             }
-            catch (Exception ex)
+            else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", $"Error de conexión: {ex.Message}", "OK");
+                Message = "No se encontraron resultados.";
             }
         }
 
-        private async void LoadMoviesFromDatabase()
-        {
-            var movieList = await _movieDatabase.GetMoviesAsync();
-            Movies.Clear();
-            foreach (var movie in movieList)
-            {
-                Movies.Add(movie);
-            }
-        }
-
+        [RelayCommand]
         private void ClearSearch()
         {
             SearchText = string.Empty;
-            Movies.Clear();
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Message = string.Empty;
         }
     }
 }

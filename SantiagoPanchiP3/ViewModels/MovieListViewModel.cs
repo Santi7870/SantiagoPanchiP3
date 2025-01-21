@@ -2,50 +2,58 @@ using SantiagoPanchiP3.Models;
 using SantiagoPanchiP3.Data;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.IO;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
-using Microsoft.Maui.Controls;
 
 namespace SantiagoPanchiP3.ViewModels
 {
-    public class MovieListViewModel : BindableObject
+    public partial class MovieListViewModel : ObservableObject
     {
-        private readonly MovieDatabase _movieDatabase;
-        public ObservableCollection<MovieViewModel> Movies { get; set; } = new ObservableCollection<MovieViewModel>();
+        private readonly DatabaseService _databaseService;
 
-        public ICommand GoBackCommand { get; }
+        // Lista observable de películas
+        [ObservableProperty]
+        private ObservableCollection<Movie> movies;
 
-        public MovieListViewModel()
+        // Constructor sin parámetros requerido por la inyección de dependencias
+        public MovieListViewModel() { }
+
+        // Constructor con DatabaseService inyectado
+        public MovieListViewModel(DatabaseService databaseService)
         {
-            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "spanchi_movies.db");
-            _movieDatabase = new MovieDatabase(dbPath);
-
-            LoadMoviesAsync();
-
-            GoBackCommand = new Command(async () => await Application.Current.MainPage.Navigation.PopAsync());
+            _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
+            Movies = new ObservableCollection<Movie>(); // Inicializa Movies para evitar NullReferenceException
         }
 
-        private async Task LoadMoviesAsync()
+        // Comando para cargar las películas desde la base de datos
+        [RelayCommand]
+        private async Task LoadMovies()
         {
-            var moviesList = await _movieDatabase.GetMoviesAsync();
-            Movies.Clear();
-
-            foreach (var movie in moviesList)
+            try
             {
-                Movies.Add(new MovieViewModel(movie));
+                // Cargar películas desde la base de datos
+                var moviesFromDb = await _databaseService.GetMoviesAsync();
+                if (moviesFromDb != null && moviesFromDb.Any())
+                {
+                    Movies.Clear();
+                    foreach (var movie in moviesFromDb)
+                    {
+                        Movies.Add(movie);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No se encontraron películas.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier error durante la carga de las películas
+                Console.WriteLine($"Error al cargar las películas: {ex.Message}");
             }
         }
     }
-
-    public class MovieViewModel
-    {
-        public string FormattedMovie { get; }
-
-        public MovieViewModel(Movie movie)
-        {
-            FormattedMovie = $"Título: {movie.Title}, Género: {movie.Genre}, Actor Principal: {movie.Actors}, " +
-                             $"Awards: {movie.Awards}, Website: {movie.Website},Spanchi {movie.Spanchi}";
-        }
-    }
 }
+

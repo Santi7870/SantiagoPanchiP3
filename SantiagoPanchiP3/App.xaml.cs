@@ -1,16 +1,14 @@
-﻿namespace SantiagoPanchiP3
+﻿using SantiagoPanchiP3.Views;
+
+namespace SantiagoPanchiP3
 {
     public partial class App : Application
     {
-        public App()
+        public App(SearchPage searchPage) //  Inyectar SearchPage
         {
             InitializeComponent();
-
+            MainPage = new AppShell(searchPage); //  Pasar SearchPage a AppShell
         }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
     }
 }
