@@ -6,7 +6,7 @@ namespace SantiagoPanchiP3.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string Titulo { get; set; }
+        public string Title { get; set; }
         public string Genero { get; set; }
         public string ActorPrincipal { get; set; }
         public string Awards { get; set; }

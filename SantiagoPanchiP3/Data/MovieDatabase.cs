@@ -53,12 +53,12 @@ namespace SantiagoPanchiP3.Data
         }
 
         // Método para buscar una película por título
-        public async Task<Movie> GetMovieByTituloAsync(string titulo)
+        public async Task<Movie> GetMovieByTituloAsync(string title)
         {
             try
             {
                 return await _database.Table<Movie>()
-                    .Where(m => m.Titulo == titulo)
+                    .Where(m => m.Title == title)
                     .FirstOrDefaultAsync();
             }
             catch (Exception ex)

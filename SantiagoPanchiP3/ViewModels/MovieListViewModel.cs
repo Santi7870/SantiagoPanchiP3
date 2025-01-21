@@ -44,8 +44,8 @@ namespace SantiagoPanchiP3.ViewModels
 
         public MovieViewModel(Movie movie)
         {
-            FormattedMovie = $"Título: {movie.Titulo}, Género: {movie.Genero}, Actor Principal: {movie.ActorPrincipal}, " +
-                             $"Awards: {movie.Awards}, Website: {movie.Website} {movie.Spanchi}";
+            FormattedMovie = $"Título: {movie.Title}, Género: {movie.Genero}, Actor Principal: {movie.ActorPrincipal}, " +
+                             $"Awards: {movie.Awards}, Website: {movie.Website},Spanchi {movie.Spanchi}";
         }
     }
 }
