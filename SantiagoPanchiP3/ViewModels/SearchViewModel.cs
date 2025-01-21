@@ -51,7 +51,7 @@ namespace SantiagoPanchiP3.ViewModels
             if (movie != null)
             {
                 await _databaseService.SaveMovieAsync(movie);
-                Message = "Película Exitosamente.";
+                Message = "Película exitosamente guardada.";
             }
             else
             {

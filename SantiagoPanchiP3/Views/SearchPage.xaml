@@ -1,15 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SantiagoPanchiP3.ViewModels"
-             x:Class="SantiagoPanchiP3.Views.SearchPage">
+             x:Class="SantiagoPanchiP3.Views.SearchPage"
+             BackgroundColor="#F8F8F8"
+             Padding="20">
+
     <ContentPage.BindingContext>
         <vm:SearchViewModel />
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout Padding="20">
-        <Entry Placeholder="Ingrese título de película" Text="{Binding SearchText}" />
-        <Button Text="Buscar" Command="{Binding SearchMovieCommand}" />
-        <Button Text="Limpiar" Command="{Binding ClearSearchCommand}" />
-        <Label Text="{Binding Message}" TextColor="Red" FontSize="16"/>
+    <VerticalStackLayout Spacing="15">
+
+        <!-- Título -->
+        <Label x:Name="spanchi_labelTitle"
+               Text="Buscar Película"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#333333"
+               Margin="0,0,0,20"/>
+
+        <!-- Campo de texto para el título de la película -->
+        <Entry x:Name="spanchi_entrySearch"
+               Placeholder="Ingrese título de película"
+               Text="{Binding SearchText}"
+               FontSize="16"
+               BackgroundColor="Gray"/>
+
+        <!-- Botón para buscar -->
+        <Button x:Name="spanchi_buttonSearch"
+                Text="Buscar"
+                Command="{Binding SearchMovieCommand}"
+                BackgroundColor="#1E90FF"
+                TextColor="White"
+                CornerRadius="5"
+                Padding="10"
+                FontSize="16"
+                HorizontalOptions="FillAndExpand"
+                Margin="0,10"/>
+
+        <!-- Botón para limpiar la búsqueda -->
+        <Button x:Name="spanchi_buttonClear"
+                Text="Limpiar"
+                Command="{Binding ClearSearchCommand}"
+                BackgroundColor="#FF6347"
+                TextColor="White"
+                CornerRadius="5"
+                Padding="10"
+                FontSize="16"
+                HorizontalOptions="FillAndExpand"/>
+
+        <!-- Mensaje de error o información -->
+        <Label x:Name="spanchi_labelMessage"
+               Text="{Binding Message}"
+               TextColor="Red"
+               FontSize="16"
+               HorizontalOptions="Center"
+               IsVisible="{Binding IsMessageVisible}" />
+
     </VerticalStackLayout>
 </ContentPage>
+
