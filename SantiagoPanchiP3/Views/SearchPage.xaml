@@ -9,7 +9,7 @@
 <StackLayout>
     <Entry x:Name="spanchi_entrySearch" Placeholder="Buscar película..." />
     <Button x:Name="spanchi_btnSearch" Text="Buscar" Command="{Binding SearchCommand}" />
-    <Button x:Name="spanchi_btnClear" Text="Limpiar" Clicked="OnClearClicked" />
-    <Label x:Name="spanchi_lblResult" Text="" />
+        <Button x:Name="spanchi_btnClear" Text="Limpiar" Command="{Binding ClearCommand}" />
+        <Label x:Name="spanchi_lblResult" Text="" />
 </StackLayout>
 </ContentPage>
