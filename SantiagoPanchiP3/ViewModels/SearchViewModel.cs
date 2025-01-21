@@ -63,14 +63,19 @@ namespace SantiagoPanchiP3.ViewModels
             try
             {
                 var response = await _httpClient.GetStringAsync(url);
-                var movies = JsonSerializer.Deserialize<List<Movie>>(response);
+                var movies = JsonSerializer.Deserialize<List<Movie>>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 if (movies != null && movies.Any())
                 {
                     var movie = movies.First();
+
+                    // Guardar en la base de datos SQLite
                     await _movieDatabase.SaveMovieAsync(movie);
-                    Movies.Clear();
-                    Movies.Add(movie);
+
+                    // Recargar la lista después de guardar
+                    LoadMoviesFromDatabase();
+
+                    await Application.Current.MainPage.DisplayAlert("Éxito", "Película guardada correctamente", "OK");
                 }
                 else
                 {
@@ -105,6 +110,7 @@ namespace SantiagoPanchiP3.ViewModels
         }
     }
 }
+
 
 
 
