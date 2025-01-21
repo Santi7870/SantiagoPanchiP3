@@ -10,7 +10,15 @@ namespace SantiagoPanchiP3.ViewModels
     public class SearchViewModel
     {
         private readonly HttpClient _httpClient = new HttpClient();
+        private readonly MovieDatabase _movieDatabase;
+
         public ObservableCollection<Movie> Movies { get; set; } = new ObservableCollection<Movie>();
+
+        public SearchViewModel()
+        {
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "spanchi_movies.db");
+            _movieDatabase = new MovieDatabase(dbPath);
+        }
 
         public async Task SearchMovieAsync(string query)
         {
@@ -21,10 +29,11 @@ namespace SantiagoPanchiP3.ViewModels
             if (movies != null && movies.Any())
             {
                 var movie = movies.First();
-                await MovieDatabase.SaveMovieAsync(movie);
+                await _movieDatabase.SaveMovieAsync(movie);
             }
         }
     }
+
 
 }
 
