@@ -69,6 +69,10 @@ namespace SantiagoPanchiP3.ViewModels
                 {
                     var movie = movies.First();
 
+                    // Extraer solo el primer género y actor
+                    movie.FirstGenre = movie.Genre?.FirstOrDefault() ?? "N/A";
+                    movie.FirstActor = movie.Actors?.FirstOrDefault() ?? "N/A";
+
                     // Guardar en la base de datos SQLite
                     await _movieDatabase.SaveMovieAsync(movie);
 
@@ -110,6 +114,7 @@ namespace SantiagoPanchiP3.ViewModels
         }
     }
 }
+
 
 
 
