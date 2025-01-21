@@ -21,19 +21,15 @@ namespace SantiagoPanchiP3
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
-            // Ruta de la base de datos
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "movies.db");
 
-            // Inyectar HttpClient para MovieService
             builder.Services.AddHttpClient<MovieService>(client =>
             {
                 client.BaseAddress = new Uri("https://freetestapi.com/api/v1/");
             });
 
-            // Inyectar DatabaseService con la ruta de la BD
             builder.Services.AddSingleton<DatabaseService>(s => new DatabaseService(dbPath));
 
-            // Inyectar ViewModels con sus dependencias
             builder.Services.AddSingleton<SearchViewModel>(s =>
                 new SearchViewModel(
                     s.GetRequiredService<MovieService>(),
@@ -45,11 +41,9 @@ namespace SantiagoPanchiP3
                     s.GetRequiredService<DatabaseService>()
                 ));
 
-            // Inyectar Vistas
             builder.Services.AddSingleton<SearchPage>();
             builder.Services.AddSingleton<MovieListPage>();
 
-            // Inyectar AppShell
             builder.Services.AddSingleton<AppShell>();
 
             return builder.Build();

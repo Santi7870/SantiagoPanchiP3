@@ -4,10 +4,10 @@ namespace SantiagoPanchiP3
 {
     public partial class App : Application
     {
-        public App(SearchPage searchPage) //  Inyectar SearchPage
+        public App(SearchPage searchPage) 
         {
             InitializeComponent();
-            MainPage = new AppShell(searchPage); //  Pasar SearchPage a AppShell
+            MainPage = new AppShell(searchPage); 
         }
 
     }

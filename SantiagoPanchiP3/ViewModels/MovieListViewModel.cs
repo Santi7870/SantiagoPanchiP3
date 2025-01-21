@@ -13,27 +13,22 @@ namespace SantiagoPanchiP3.ViewModels
     {
         private readonly DatabaseService _databaseService;
 
-        // Lista observable de películas
         [ObservableProperty]
         private ObservableCollection<Movie> movies;
 
-        // Constructor sin parámetros requerido por la inyección de dependencias
         public MovieListViewModel() { }
 
-        // Constructor con DatabaseService inyectado
         public MovieListViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
-            Movies = new ObservableCollection<Movie>(); // Inicializa Movies para evitar NullReferenceException
+            Movies = new ObservableCollection<Movie>(); 
         }
 
-        // Comando para cargar las películas desde la base de datos
         [RelayCommand]
         private async Task LoadMovies()
         {
             try
             {
-                // Cargar películas desde la base de datos
                 var moviesFromDb = await _databaseService.GetMoviesAsync();
                 if (moviesFromDb != null && moviesFromDb.Any())
                 {
@@ -50,7 +45,6 @@ namespace SantiagoPanchiP3.ViewModels
             }
             catch (Exception ex)
             {
-                // Manejar cualquier error durante la carga de las películas
                 Console.WriteLine($"Error al cargar las películas: {ex.Message}");
             }
         }

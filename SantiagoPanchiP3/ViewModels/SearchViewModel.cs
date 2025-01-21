@@ -22,10 +22,8 @@ namespace SantiagoPanchiP3.ViewModels
         private readonly MovieService _movieService;
         private readonly DatabaseService _databaseService;
 
-        //  Constructor sin parámetros requerido por XAML
         public SearchViewModel() { }
 
-        // Constructor con dependencias (usado en inyección de dependencias)
         public SearchViewModel(MovieService movieService, DatabaseService databaseService)
         {
             _movieService = movieService ?? throw new ArgumentNullException(nameof(movieService));

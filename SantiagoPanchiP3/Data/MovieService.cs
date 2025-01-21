@@ -12,7 +12,6 @@ namespace SantiagoPanchiP3.Data
     {
         private readonly HttpClient _httpClient;
 
-        // Inyección de dependencia
         public MovieService(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -47,7 +46,7 @@ namespace SantiagoPanchiP3.Data
                 return new Movie
                 {
                     Title = movie.title,
-                    Genre = movie.genre?.FirstOrDefault() ?? "N/A",  // <-- Aquí se cambia a "Genre"
+                    Genre = movie.genre?.FirstOrDefault() ?? "N/A",  
                     Actor = movie.actors?.FirstOrDefault() ?? "N/A",
                     Awards = movie.awards,
                     Website = movie.website

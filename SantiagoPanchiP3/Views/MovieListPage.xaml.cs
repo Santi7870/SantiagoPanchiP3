@@ -7,12 +7,11 @@ namespace SantiagoPanchiP3.Views
     {
         private readonly MovieListViewModel _viewModel;
 
-        // Constructor que recibe el ViewModel como parámetro
         public MovieListPage(MovieListViewModel viewModel)
         {
             InitializeComponent();
-            _viewModel = viewModel;  // Asigna el ViewModel al campo privado _viewModel
-            BindingContext = _viewModel; // Asigna el ViewModel al BindingContext de la página
+            _viewModel = viewModel;  
+            BindingContext = _viewModel; 
         }
 
         protected override async void OnAppearing()
