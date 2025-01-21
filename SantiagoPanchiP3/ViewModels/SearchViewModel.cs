@@ -34,6 +34,7 @@ namespace SantiagoPanchiP3.ViewModels
 
         public ICommand SearchCommand { get; }
         public ICommand ClearCommand { get; }
+        public ICommand NavigateToMovieListCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -44,6 +45,9 @@ namespace SantiagoPanchiP3.ViewModels
 
             SearchCommand = new Command(async () => await SearchMovieAsync());
             ClearCommand = new Command(ClearSearch);
+            NavigateToMovieListCommand = new Command(async () => await Application.Current.MainPage.Navigation.PushAsync(new Views.MovieListPage()));
+
+            LoadMoviesFromDatabase();
         }
 
         private async Task SearchMovieAsync()
@@ -79,6 +83,16 @@ namespace SantiagoPanchiP3.ViewModels
             }
         }
 
+        private async void LoadMoviesFromDatabase()
+        {
+            var movieList = await _movieDatabase.GetMoviesAsync();
+            Movies.Clear();
+            foreach (var movie in movieList)
+            {
+                Movies.Add(movie);
+            }
+        }
+
         private void ClearSearch()
         {
             SearchText = string.Empty;
@@ -89,11 +103,9 @@ namespace SantiagoPanchiP3.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
     }
-
 }
+
 
 
 
