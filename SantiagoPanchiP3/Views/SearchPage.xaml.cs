@@ -10,4 +10,5 @@ public partial class SearchPage : ContentPage
         BindingContext = new SearchViewModel();
 
     }
+
 }

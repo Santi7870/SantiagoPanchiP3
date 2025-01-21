@@ -18,6 +18,8 @@
         <Button x:Name="spanchi_btnClear" 
                 Text="Limpiar" 
                 Command="{Binding ClearCommand}" />
+        <Button x:Name="spanchi_btnMovies" Text="Ver Películas Guardadas" Command="{Binding NavigateToMovieListCommand}" />
+
 
         <CollectionView ItemsSource="{Binding Movies}">
             <CollectionView.ItemTemplate>
